@@ -5,26 +5,77 @@
  */
 
 /* You can override the default Infima variables here. */
+/**
+ * Ubujima Developer Hub
+ * Global theme styles
+ */
+
+/* Light mode */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #c8a951;
+  --ifm-color-primary-dark: #b69a48;
+  --ifm-color-primary-darker: #aa9043;
+  --ifm-color-primary-darkest: #8c7637;
+  --ifm-color-primary-light: #d0b563;
+  --ifm-color-primary-lighter: #d7be73;
+  --ifm-color-primary-lightest: #e2d19b;
+
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f7f7f7;
+
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(200, 169, 81, 0.12);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* Dark mode */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #d6b85f;
+  --ifm-color-primary-dark: #c8a951;
+  --ifm-color-primary-darker: #b69a48;
+  --ifm-color-primary-darkest: #8c7637;
+  --ifm-color-primary-light: #dfc875;
+  --ifm-color-primary-lighter: #e5d18a;
+  --ifm-color-primary-lightest: #eee2b4;
+
+  --ifm-background-color: #1a1a1a;
+  --ifm-background-surface-color: #222222;
+
+  --docusaurus-highlighted-code-line-bg: rgba(200, 169, 81, 0.18);
+}
+
+/* Links */
+a {
+  transition: color 0.2s ease;
+}
+
+/* Code blocks */
+code {
+  border-radius: 4px;
+}
+
+/* Sidebar */
+.menu__link--active {
+  font-weight: 600;
+}
+
+/* Navbar */
+.navbar {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Better document readability */
+.markdown {
+  line-height: 1.7;
+}
+
+/* Headings */
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  font-weight: 700;
+}
+
+/* Tables */
+.table-of-contents {
+  font-size: 0.9rem;
 }
