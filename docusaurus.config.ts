@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Ubujima Developer Hub',
-  tagline: 'Build with AfroCom, Maat AI, Maji and the Ubujima ecosystem',
+  tagline: 'Co-create the technology that shape the Global Afro-community',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -75,21 +75,32 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'Ubujima',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Ubujima Logo',
         src: 'img/logo.svg',
       },
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'gettingStartedSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Getting Started',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          type: 'docSidebar',
+          sidebarId: 'projectsSidebar',
+          position: 'left',
+          label: 'Projects',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'engineeringSidebar',
+          position: 'left',
+          label: 'Engineering',
+        },
+        {
+          href: 'https://github.com/Ubujima',
           label: 'GitHub',
           position: 'right',
         },

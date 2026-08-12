@@ -1,0 +1,434 @@
+---
+sidebar_position: 1
+title: Architecture
+---
+
+# Ubujima Technology Architecture
+
+## 1. Architectural Vision
+
+The long-term Ubujima ecosystem consists of three major technology initiatives:
+
+- **AfroCom** — the community and super-app layer
+- **Ma'at AI** — the intelligence and AI layer
+- **Maji Blockchain** — the decentralized infrastructure layer
+
+These initiatives are expected to increasingly interact through shared APIs, services, identity, data infrastructure and platform capabilities.
+
+The objective is not to build three isolated technology stacks.
+
+The objective is to create an ecosystem in which capabilities can be reused across products.
+
+```text
+                         UBUJIMA ECOSYSTEM
+                                │
+             ┌──────────────────┼──────────────────┐
+             │                  │                  │
+          AfroCom           Ma'at AI            Maji
+        Community &        Intelligence       Blockchain
+        Super-App             Layer            Layer
+             │                  │                  │
+             └──────────────────┼──────────────────┘
+                                │
+                       Shared Platform Layer
+                                │
+             ┌──────────────────┼──────────────────┐
+             │                  │                  │
+          Identity            APIs              Data
+          & Access          & Services        Infrastructure
+             │                  │                  │
+             └──────────────────┼──────────────────┘
+                                │
+                    Infrastructure & Operations
+
+
+2. Current Architecture
+AfroCom is currently the primary application being actively developed.
+The current client architecture consists of:
+Flutter for mobile applications
+React for web applications
+Supabase as the primary backend platform
+Cloudinary for media storage and optimization
+The current architecture allows the team to develop and deploy features rapidly without maintaining a large backend infrastructure team.
+            AfroCom Mobile
+                 Flutter
+                   │
+                   │
+                   ▼
+              ┌─────────┐
+              │         │
+              │ Supabase│
+              │         │
+              └─────────┘
+                   │
+        ┌──────────┼──────────┐
+        │          │          │
+     Database    Auth       Realtime
+        │                     │
+        └──────────┬──────────┘
+                   │
+             Cloudinary
+          Media & Optimization
+
+
+              AfroCom Web
+                React
+                   │
+                   └──────────► Supabase
+
+This architecture remains valid and useful.
+We are not replacing it simply because we eventually want a custom backend.
+
+3. Why We Are Not Rebuilding Everything at Once
+A complete rewrite would introduce significant technical, financial and operational risk.
+It would also slow product development while the current platform continues to evolve.
+Our approach is therefore:
+Incremental evolution rather than a big-bang rewrite.
+Existing systems should continue operating while new services are introduced where there is a clear technical, economic or strategic reason.
+This means developers should avoid unnecessary rewrites.
+Before replacing an existing component, consider:
+Does the current component meet the requirement?
+Is it creating a measurable limitation?
+Is the replacement sufficiently mature?
+What migration path exists?
+Can the old and new systems operate together?
+What will the migration cost?
+What operational burden will the new system introduce?
+
+4. Transitional Architecture
+As the platform grows, selected backend capabilities will progressively move outside the Supabase monolith/BaaS environment.
+The transition should introduce a service-oriented architecture while allowing Supabase to continue supporting parts of the existing application.
+A simplified transitional architecture may look like:
+            Flutter Mobile
+                    │
+             React Web
+                    │
+                    ▼
+              API Layer
+                    │
+          ┌─────────┴─────────┐
+          │                   │
+     Existing APIs       New Services
+          │                   │
+          ▼                   ▼
+      Supabase          Service Layer
+          │                   │
+          └─────────┬─────────┘
+                    │
+             Shared Data /
+             Infrastructure
+
+During this period, both architectures may coexist.
+This is intentional.
+
+5. Future Platform Architecture
+The long-term architecture is expected to evolve toward independently deployable services.
+A conceptual model is:
+                        CLIENTS
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+           Flutter        React       Other
+           Mobile          Web        Clients
+              │            │            │
+              └────────────┼────────────┘
+                           │
+                           ▼
+                    API / Gateway Layer
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+        ▼                  ▼                  ▼
+   Identity &          Core AfroCom       Platform
+     Access              Services          Services
+        │                  │                  │
+        │        ┌─────────┼─────────┐        │
+        │        │         │         │        │
+        ▼        ▼         ▼         ▼        ▼
+     Users     Posts     Chat      Maps   Notifications
+                   │
+                   │
+        ┌──────────┼───────────┬─────────────┐
+        │          │           │             │
+        ▼          ▼           ▼             ▼
+     Commerce   Fintech    Streaming     Workspace
+        │          │           │             │
+        └──────────┴───────────┼─────────────┘
+                               │
+                 ┌─────────────┴─────────────┐
+                 │                           │
+                 ▼                           ▼
+             Ma'at AI                    Maji
+          Intelligence Layer        Blockchain Layer
+                 │                           │
+                 └─────────────┬─────────────┘
+                               │
+                         Data Platform
+                               │
+                    Infrastructure Layer
+
+This diagram represents a direction, not a requirement that every service must exist immediately.
+
+6. Core Service Domains
+The future platform is expected to contain independently managed service domains.
+Initial areas include:
+Identity & Authentication
+Responsible for:
+Sign-up
+Sign-in
+Authentication
+Authorization
+Session management
+Identity
+Access control
+User Profile
+Responsible for:
+Profiles
+Connections
+Following
+Preferences
+User settings
+Social relationships
+Posts & Classifieds
+Responsible for:
+Posts
+Comments
+Likes
+Reactions
+Classified content
+Content metadata
+Communication
+Responsible for:
+Chat
+Messaging
+Real-time communication
+Voice and video communication
+The communication architecture may incorporate Matrix and related open-source technologies as the ecosystem evolves.
+Notifications
+Responsible for:
+Push notifications
+Email notifications
+System alerts
+Event-driven notifications
+Maps & Discovery
+Responsible for:
+Geolocation
+Map integrations
+Location-based discovery
+Geographic content
+Co-Creation
+Responsible for:
+Feedback
+Polls
+Requests
+Community participation
+Cooperative decision-making
+Commerce
+Responsible for:
+Product listings
+Orders
+Commerce workflows
+Payments
+Merchant functionality
+Fintech
+Responsible for:
+Wallets
+Transactions
+Crowdfunding
+Financial services
+Financial functionality will require appropriate security, compliance and regulatory architecture.
+Streaming
+Responsible for:
+Video
+Music
+Media delivery
+Streaming infrastructure
+Workspace
+Responsible for:
+Collaboration
+Shared workspaces
+Productivity tools
+Team functionality
+Well-Being / AI
+Responsible for AI-powered experiences within AfroCom and potentially other Ubujima products.
+This domain will increasingly connect with Ma'at AI.
+B2B
+Responsible for:
+Business tools
+Analytics
+Insights
+Operational utilities
+Organization-facing services
+Third-Party Integrations
+Responsible for integrations with external platforms and services.
+
+7. Ma'at AI as a Shared Intelligence Layer
+Ma'at AI should not be treated simply as another feature inside AfroCom.
+The long-term objective is to develop reusable AI capabilities that can serve multiple parts of the ecosystem.
+Conceptually:
+                 Ma'at AI
+                     │
+       ┌─────────────┼─────────────┐
+       │             │             │
+   AI Services    Data/ML       Agents &
+   & Models       Pipeline       Tools
+       │             │             │
+       └─────────────┼─────────────┘
+                     │
+              AI API / Services
+                     │
+          ┌──────────┼──────────┐
+          │          │          │
+       AfroCom     B2B       Future
+       Services   Services   Products
+
+AI capabilities should therefore be designed as reusable services rather than tightly coupling every AI feature directly to the AfroCom application.
+
+8. Maji as an Infrastructure Layer
+Maji Blockchain is being researched as a potential decentralized infrastructure layer.
+Where appropriate, Maji may eventually support:
+Wallets
+Transactions
+Digital ownership
+Crowdfunding
+Governance
+Identity
+Community participation
+Blockchain should only be introduced where it provides meaningful technical or economic value.
+The architecture should avoid adding blockchain complexity merely for its own sake.
+
+9. API-First Architecture
+APIs are central to the long-term architecture.
+Clients should communicate with platform capabilities through defined APIs rather than directly depending on internal implementation details.
+This allows:
+Mobile applications
+Web applications
+AI services
+Third-party applications
+Internal services
+to interact with the same underlying capabilities.
+API design should prioritize:
+Clear contracts
+Versioning
+Authentication
+Authorization
+Validation
+Rate limiting
+Observability
+Backward compatibility
+Documentation
+
+10. Data Architecture
+Data is one of the most important assets in the Ubujima ecosystem.
+The architecture should progressively separate:
+Operational application data
+Media
+Analytics
+AI/ML data
+Event data
+Financial data
+Blockchain data
+Data ownership, privacy and access control must be considered at the architectural level.
+We should avoid creating unnecessary coupling where every service depends directly on every other service's database.
+As the architecture matures, services should increasingly communicate through APIs and appropriate event-driven mechanisms.
+
+11. Event-Driven Capabilities
+As the ecosystem grows, events may become an important mechanism for communication between services.
+For example:
+User Created
+     │
+     ├──► Profile Service
+     ├──► Notification Service
+     ├──► Analytics
+     └──► Ma'at AI
+
+Or:
+New Post Created
+     │
+     ├──► Feed
+     ├──► Notifications
+     ├──► Analytics
+     ├──► Content Curation
+     └──► AI Services
+
+This allows services to respond to platform activity without creating unnecessary direct dependencies.
+
+12. Infrastructure Philosophy
+Ubujima will prioritize infrastructure that is:
+- Reliable
+- Secure
+- Cost-conscious
+- Observable
+- Automatable
+- Portable
+- Scalable
+
+We will use managed services where they provide meaningful advantages.
+We will self-host or replace managed services where doing so provides sufficient strategic, technical or economic value.
+The objective is not maximum infrastructure complexity.
+The objective is maximum useful capability for the resources available.
+
+13. Migration Principles
+The migration from Supabase toward a custom backend should follow these principles:
+1. Incremental
+Migrate one capability at a time.
+2. Backward Compatible
+Existing applications should continue working during migration.
+3. Observable
+New services must provide adequate logging, metrics and monitoring.
+4. Reversible
+Where practical, migration decisions should allow rollback.
+5. Cost Conscious
+Infrastructure costs should be evaluated before introducing new services.
+6. Security First
+Authentication, authorization, secrets and user data must be protected throughout the migration.
+7. Documentation Driven
+Architectural changes must be documented so that future contributors understand why decisions were made.
+
+14. The Architecture We Are Building Today
+The most important principle for contributors is that the future architecture does not require us to build everything today.
+A developer working on AfroCom today may simply be working with:
+Flutter
+   ↓
+Supabase
+   ↓
+PostgreSQL
+
+Another developer may be building a new independent service.
+Both can be correct.
+The architecture should allow these systems to coexist while the platform evolves.
+            TODAY
+               │
+        ┌──────┴──────┐
+        │             │
+    Existing       New
+    Supabase      Services
+        │             │
+        └──────┬──────┘
+               │
+               ▼
+          TRANSITION
+               │
+               ▼
+        UBUJIMA PLATFORM
+               │
+       ┌───────┼────────┐
+       ▼       ▼        ▼
+    AfroCom  Ma'at     Maji
+
+
+15. Architectural Principle
+The Ubujima architecture is designed around one fundamental idea:
+Do not build today's system as if tomorrow already exists. Build today's system so that tomorrow remains possible.
+We will evolve the architecture as the products, users, technology and team evolve.
+Architecture decisions should therefore favor:
+- Simplicity over unnecessary complexity
+- Modularity over tight coupling
+- Reusability over duplication
+- Security over convenience
+- Observability over guesswork
+- Incremental migration over disruptive rewrites
+- Open standards where practical
+- Community contribution where appropriate
+
+We are building the infrastructure for an ecosystem, one service at a time.

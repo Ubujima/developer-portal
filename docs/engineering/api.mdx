@@ -1,0 +1,467 @@
+---
+sidebar_position: 2
+title: API Architecture & Guidelines
+---
+
+# API Architecture & Guidelines
+
+# API Architecture & Guidelines
+
+**One ecosystem. Clear interfaces. Composable services.**
+
+APIs are the communication layer between Ubujima's applications, services and infrastructure.
+
+As the ecosystem evolves, APIs will allow AfroCom, Ma'at AI, Maji and future applications to communicate without requiring every component to understand the internal implementation of another component.
+
+This document describes the current API approach and the direction toward a more modular Ubujima API platform.
+
+---
+
+## 1. API Architecture Today
+
+AfroCom currently uses APIs to connect its client applications to the Supabase backend.
+
+The primary clients are:
+
+- **Flutter** — AfroCom mobile applications
+- **React** — AfroCom web application
+
+The current architecture can be represented as:
+
+```text
+Flutter Mobile ──────┐
+                     │
+                     ▼
+                  Supabase
+                     │
+React Web ───────────┘
+
+Supabase currently provides several backend capabilities, including database access, authentication, storage and realtime functionality.
+This approach allows the team to move quickly while keeping infrastructure requirements relatively low.
+
+2. API Evolution
+As Ubujima evolves toward a broader ecosystem, the API layer will progressively become more independent from the underlying backend implementation.
+The direction is:
+CURRENT
+
+Flutter ──┐
+          ├──► Supabase
+React ────┘
+
+
+TRANSITION
+
+Flutter ──┐
+          ├──► API Layer ──► Supabase
+React ────┘              └─► New Services
+
+
+FUTURE
+
+Flutter ──┐
+React ────┤
+Ma'at ────┤
+Maji ─────┤
+Other ────┘
+             │
+             ▼
+        API / Gateway
+             │
+     ┌───────┼────────┐
+     ▼       ▼        ▼
+   Users   Content   Communication
+     │       │        │
+     ▼       ▼        ▼
+ Commerce  Fintech   Other Services
+
+The API layer should therefore become a stable contract between clients and backend services.
+
+3. API-First Principle
+Applications should depend on well-defined interfaces, rather than directly depending on internal implementation details.
+For example, a client should conceptually request:
+GET /users/{id}
+
+rather than needing to know:
+which database stores the user;
+which service owns the data;
+whether the service is hosted on Supabase;
+whether the data is eventually moved to another database.
+This separation allows backend components to evolve without requiring unnecessary changes to client applications.
+
+4. Service Ownership
+As the architecture becomes more modular, each service should have a clearly defined responsibility.
+For example:
+Authentication Service
+        │
+        ├── Authentication
+        ├── Sessions
+        └── Access control
+
+
+Profile Service
+        │
+        ├── Profiles
+        ├── Relationships
+        └── Preferences
+
+
+Post Service
+        │
+        ├── Posts
+        ├── Comments
+        ├── Likes
+        └── Reactions
+
+
+Communication Service
+        │
+        ├── Messaging
+        ├── Chat
+        └── Calls
+
+A service should own its domain rather than becoming a general-purpose collection of unrelated functionality.
+
+5. API Gateway
+As the number of services increases, Ubujima is expected to introduce an API gateway or equivalent entry layer.
+The gateway may provide capabilities such as:
+Request routing
+Authentication enforcement
+Authorization
+Rate limiting
+Request validation
+API versioning
+Logging
+Observability
+Service discovery
+Traffic management
+Conceptually:
+                   Clients
+                       │
+                       ▼
+                  API Gateway
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+        ▼              ▼              ▼
+   User Service   Post Service   Communication
+        │              │              │
+        ▼              ▼              ▼
+     Database       Database       Data Store
+
+The gateway should not become a business-logic monolith.
+Its primary responsibility is to manage access to services rather than implement the services themselves.
+
+6. API Domains
+The initial API domains are expected to broadly correspond with the platform service domains.
+These include:
+Identity
+Authentication, authorization and identity.
+Users
+Profiles, relationships, preferences and user settings.
+Content
+Posts, comments, reactions, classifications and content metadata.
+Communication
+Messaging, realtime communication, calls and related functionality.
+Notifications
+Push notifications, email and system notifications.
+Discovery
+Maps, geolocation and location-based discovery.
+Co-Creation
+Feedback, polls, requests and community participation.
+Commerce
+Products, merchants, orders and commerce workflows.
+Fintech
+Wallets, transactions and crowdfunding.
+Streaming
+Video, music and media services.
+Workspace
+Collaboration and productivity functionality.
+AI
+AI-powered capabilities provided by Ma'at AI.
+B2B
+Business analytics, insights and operational utilities.
+Blockchain
+Blockchain-related functionality provided by Maji.
+
+7. API Versioning
+APIs should be designed so that changes do not unnecessarily break existing clients.
+Where appropriate, versioning may be introduced using a structure such as:
+/api/v1/...
+
+followed by future versions:
+/api/v2/...
+
+Versioning strategy should be determined according to the maturity and requirements of each service.
+Developers should avoid breaking existing API contracts without an intentional migration plan.
+
+8. Authentication & Authorization
+API access must distinguish between:
+Who are you?
+and:
+What are you allowed to do?
+Authentication establishes identity.
+Authorization determines what that identity can access or perform.
+Future API services should therefore support appropriate mechanisms for:
+User authentication
+Service authentication
+Role-based access
+Permission-based access
+Organization access
+Administrative access
+Sensitive operations must require appropriate authorization checks.
+
+9. Data Validation
+APIs should never assume that incoming data is valid.
+Requests should be validated before being processed.
+Validation should consider:
+Required fields
+Data types
+Length restrictions
+Allowed values
+Ownership
+Permissions
+Business rules
+Security constraints
+Invalid requests should return predictable errors.
+
+10. Error Handling
+API errors should be consistent and understandable.
+A response should communicate:
+Whether the request succeeded
+What went wrong
+A machine-readable error code
+A useful human-readable message where appropriate
+A conceptual response might look like:
+{
+  "success": false,
+  "error": {
+    "code": "RESOURCE_NOT_FOUND",
+    "message": "The requested resource could not be found."
+  }
+}
+
+Internal implementation details, secrets and sensitive information must never be exposed through API errors.
+
+11. Rate Limiting
+Public APIs should eventually implement appropriate rate limiting.
+Rate limiting helps protect:
+Platform availability
+Infrastructure costs
+Service stability
+User accounts
+APIs from abuse
+Different limits may apply to different categories of requests.
+For example:
+Public API
+     │
+     ▼
+Rate Limiter
+     │
+     ├── Anonymous requests
+     ├── Authenticated users
+     ├── Businesses
+     ├── Trusted services
+     └── Internal services
+
+Limits should be based on actual platform requirements rather than arbitrary complexity.
+
+12. Internal Service Communication
+As microservices are introduced, services will need to communicate with one another.
+Depending on the use case, communication may be:
+Synchronous
+Used when a service requires an immediate response.
+Service A
+   │
+   │ request
+   ▼
+Service B
+   │
+   │ response
+   ▼
+Service A
+
+Asynchronous
+Used when the initiating service does not need an immediate response.
+Service A
+   │
+   ▼
+Event / Message
+   │
+   ├──► Service B
+   ├──► Service C
+   └──► Service D
+
+The appropriate communication pattern should be selected according to the actual requirement.
+
+13. Event-Driven APIs
+Events may become increasingly important as the ecosystem grows.
+For example:
+USER_CREATED
+POST_CREATED
+MESSAGE_SENT
+ORDER_CREATED
+PAYMENT_COMPLETED
+CAMPAIGN_CREATED
+
+A service can publish an event without needing to know every service that may eventually consume it.
+For example:
+POST_CREATED
+     │
+     ├──► Notification Service
+     ├──► Analytics
+     ├──► Content Curation
+     └──► Ma'at AI
+
+This can reduce direct coupling between services.
+
+14. External Integrations
+Ubujima will use third-party services where appropriate.
+Examples may include:
+Payment providers
+Maps
+Email
+Push notifications
+Media infrastructure
+AI providers
+Communication services
+Analytics
+Other external APIs
+Third-party integrations should normally be isolated behind an internal abstraction where practical.
+For example:
+AfroCom
+   │
+   ▼
+Payment Service
+   │
+   ├── Provider A
+   ├── Provider B
+   └── Future Provider
+
+This reduces unnecessary coupling between core platform logic and external vendors.
+
+15. API Documentation
+Every production API should have clear documentation.
+Documentation should describe:
+Endpoint
+Method
+Authentication requirements
+Parameters
+Request format
+Response format
+Error responses
+Examples
+Version
+Permissions
+Where appropriate, APIs should use an industry-standard machine-readable specification such as OpenAPI.
+The objective is that another developer should be able to understand and consume an API without needing to ask the original developer how it works.
+
+16. Security
+API security is a platform-wide responsibility.
+Developers must consider:
+Authentication
+Authorization
+Input validation
+Rate limiting
+Encryption
+Secrets management
+Abuse prevention
+Logging
+Audit trails
+Data privacy
+Secure third-party integrations
+Sensitive credentials must never be committed to GitHub.
+API keys, tokens, passwords and other secrets should be stored using appropriate secret-management mechanisms.
+
+17. API and Privacy
+Ubujima operates technology involving community and user data.
+API design must therefore respect:
+User privacy
+Data minimization
+Access controls
+Purpose limitation
+Appropriate retention
+Secure transmission
+Secure storage
+Developers should not expose more user data through an API than is required for the intended functionality.
+
+18. API Development During the Supabase Transition
+During the migration period, developers may encounter both Supabase-based functionality and custom services.
+This is expected.
+A new service does not automatically require immediate migration of all related functionality.
+For example:
+                API Layer
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+          ▼                     ▼
+      Supabase             New Service
+          │                     │
+          ▼                     ▼
+   Existing Features       New Capability
+
+The migration can therefore happen feature by feature.
+This approach reduces:
+Development risk
+Downtime
+Migration complexity
+Infrastructure costs
+Unnecessary rewrites
+
+19. API Design Principles
+Ubujima developers should generally follow these principles:
+Keep APIs simple
+Do not introduce complexity without a reason.
+Design for change
+Avoid contracts that make future evolution unnecessarily difficult.
+Keep services loosely coupled
+Services should depend on contracts rather than implementation details.
+Validate everything
+Never blindly trust incoming requests.
+Secure by default
+Security should not be an afterthought.
+Document the contract
+An undocumented API becomes technical debt.
+Observe production systems
+Logs, metrics and traces are essential for diagnosing distributed systems.
+Avoid premature microservices
+Not every feature needs its own service.
+A service should be created when there is a meaningful reason to separate it.
+
+20. The Long-Term API Vision
+The long-term goal is a common API platform through which Ubujima applications and services can interact.
+                   UBUJIMA API PLATFORM
+                            │
+              ┌─────────────┼─────────────┐
+              │             │             │
+           AfroCom       Ma'at AI        Maji
+              │             │             │
+              └─────────────┼─────────────┘
+                            │
+                     Shared Services
+                            │
+          ┌─────────────────┼─────────────────┐
+          │                 │                 │
+       Identity           Data           Infrastructure
+          │                 │                 │
+          └─────────────────┼─────────────────┘
+                            │
+                       External APIs
+
+This allows the ecosystem to evolve while maintaining clear boundaries between applications and infrastructure.
+
+21. The Rule for Contributors
+When building a new capability, ask:
+Who owns this capability, who consumes it, and what interface should exist between them?
+Before creating a new API or service, consider:
+Does this capability already exist?
+Which service should own it?
+Who needs to consume it?
+Does it need synchronous communication?
+Would an event be more appropriate?
+What data should cross the boundary?
+How will authentication and authorization work?
+How will the API evolve?
+How will it be monitored?
+Can the design coexist with the current Supabase architecture?
+The objective is not to create APIs for the sake of having APIs.
+The objective is to create clear boundaries that allow the Ubujima ecosystem to grow without becoming tightly coupled.

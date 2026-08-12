@@ -1,0 +1,618 @@
+# Security
+
+**Security is a design requirement, not a final checklist.**
+
+Ubujima is building a growing technology ecosystem consisting of AfroCom, Ma'at AI, Maji and future services.
+
+As the platform grows, security must be considered across:
+
+- Applications
+- APIs
+- Infrastructure
+- Data
+- Developer access
+- Third-party integrations
+- AI systems
+- Communication systems
+- Blockchain infrastructure
+
+The purpose of this document is to establish the baseline security expectations for contributors and developers.
+
+---
+
+## 1. Security Principles
+
+Our security approach is guided by several principles.
+
+### Least privilege
+
+People, services and applications should have only the access they actually need.
+
+### Secure by default
+
+New systems should begin with reasonable security controls rather than adding them after deployment.
+
+### Defense in depth
+
+No single security control should be treated as sufficient.
+
+### Minimize exposure
+
+Sensitive information should only be exposed where necessary.
+
+### Assume failure
+
+Systems should be designed with the assumption that components can fail or be compromised.
+
+### Auditability
+
+Important actions should be traceable through appropriate logs and records.
+
+### Protect users first
+
+Security decisions should ultimately protect users, their data and the integrity of the platform.
+
+---
+
+# 2. Developer Access
+
+Developer access is granted according to the contributor's role and responsibilities.
+
+Access may include:
+
+- GitHub repositories
+- GitHub organization resources
+- ClickUp
+- Discord
+- Development environments
+- Supabase
+- Coolify
+- Cloud services
+- Matrix development environments
+- Other project-specific tools
+
+Developers should receive the minimum access required to perform their work.
+
+Access should not be granted simply because a developer requests it.
+
+---
+
+# 3. Repository Access
+
+Ubujima repositories may contain proprietary source code and intellectual property.
+
+Private repositories should therefore be treated as confidential company resources.
+
+Before receiving access to sensitive repositories, contributors may be required to complete the applicable onboarding and legal requirements, which may include:
+
+- Identity verification
+- Contributor onboarding
+- NDA
+- Intellectual property agreement
+- Contributor agreement
+- Role confirmation
+- Security orientation
+
+Repository access should be reviewed when a contributor changes role or stops contributing.
+
+---
+
+# 4. GitHub Security
+
+GitHub is the primary source-control platform for Ubujima development.
+
+Developers must:
+
+- Use their own GitHub account.
+- Never share GitHub passwords.
+- Enable strong account security.
+- Prefer multi-factor authentication.
+- Never commit secrets.
+- Use pull requests where required.
+- Respect repository permissions.
+- Avoid force-pushing shared branches unless explicitly authorized.
+- Review changes before merging.
+- Report suspicious repository activity.
+
+Personal access tokens must be treated as credentials.
+
+They should never be placed in:
+
+- Source code
+- Documentation
+- Screenshots
+- Public issues
+- Chat messages
+- Commit messages
+
+---
+
+# 5. Secrets Management
+
+Secrets include information such as:
+
+- Passwords
+- API keys
+- Access tokens
+- Database credentials
+- JWT secrets
+- Private keys
+- Cloud credentials
+- Payment credentials
+- AI provider credentials
+- Blockchain keys
+
+Secrets must never be committed to Git.
+
+Bad:
+
+```text
+API_KEY="actual-secret-key"
+
+Better:
+API_KEY=${API_KEY}
+
+with the actual value supplied through the appropriate environment or secret-management system.
+If a secret is accidentally committed:
+Stop using the compromised secret.
+Notify the responsible project lead.
+Rotate/revoke the credential.
+Remove the secret from the repository where appropriate.
+Investigate whether it was accessed.
+Document the incident.
+Removing a secret from the latest commit does not necessarily mean it is no longer exposed because Git history may retain it.
+
+6. Environment Separation
+Development, staging and production environments should be treated separately.
+Development
+     │
+     ▼
+Staging / Testing
+     │
+     ▼
+Production
+
+Developers should not use production credentials for ordinary development.
+Production databases and services should not be used as personal testing environments.
+Where practical, development environments should use:
+Test accounts
+Test data
+Separate credentials
+Separate API keys
+Separate storage
+Separate service instances
+
+7. User Data
+AfroCom is a community platform and therefore handles user-generated and potentially sensitive information.
+Developers should only access user data when required for an authorized development, support or operational purpose.
+Developers must not:
+Browse user information out of curiosity.
+Copy user data into personal systems.
+Export production data without authorization.
+Share user information in public channels.
+Use real user data for personal testing.
+Include personally identifiable information in logs unnecessarily.
+When test data is sufficient, test data should be used.
+
+8. Authentication
+Authentication establishes the identity of a user or service.
+Authentication mechanisms may include:
+Password-based authentication
+OAuth
+Session tokens
+JWT-based authentication
+Service credentials
+Other appropriate mechanisms
+Authentication credentials must never be logged or exposed.
+Authentication should be handled through established platform mechanisms rather than independently reimplemented by every feature.
+
+9. Authorization
+Authentication answers:
+Who are you?
+Authorization answers:
+What are you allowed to do?
+Every protected operation should perform appropriate authorization checks.
+For example:
+User A
+  │
+  ├── Can access own profile
+  ├── May access public content
+  └── Cannot automatically modify User B's private data
+
+Never assume that because a user can access an application, they are authorized to perform every API operation.
+
+10. API Security
+All public and internal APIs should consider:
+Authentication
+Authorization
+Input validation
+Rate limiting
+Request size limits
+Abuse prevention
+Secure error handling
+Logging
+Transport encryption
+APIs should not expose internal implementation details.
+Sensitive endpoints should have explicit authorization requirements.
+
+11. Input Validation
+All externally supplied data should be treated as untrusted.
+This includes:
+Form inputs
+API requests
+User-generated content
+File uploads
+Query parameters
+URLs
+Webhooks
+Third-party API responses
+Validate data before processing or storing it.
+Validation should occur at appropriate system boundaries.
+
+12. File Uploads
+User-uploaded files require particular care.
+Systems handling uploads should consider:
+File type validation
+File size limits
+Malware scanning where appropriate
+Filename handling
+Storage isolation
+Access controls
+Content moderation
+Safe processing
+Resource limits
+Never assume that a file is safe simply because its filename or extension looks valid.
+
+13. Web and Mobile Application Security
+Developers working on Flutter or React applications should consider:
+Secure API communication
+Token handling
+Secure local storage
+Session management
+Input validation
+Deep-link security
+Web security headers
+Cross-site scripting
+Cross-site request forgery where applicable
+Dependency vulnerabilities
+Secure error handling
+Sensitive credentials should not be embedded in client applications.
+Anything shipped to a client should be considered potentially observable by users.
+
+14. Database Security
+Database access should follow least-privilege principles.
+Developers should avoid giving application components unrestricted database access.
+Database security should consider:
+Authentication
+Authorization
+Row-level access
+Service roles
+Data isolation
+Encryption
+Backups
+Auditability
+For Supabase-based functionality, developers must understand the distinction between client-accessible operations and privileged server-side operations.
+Privileged credentials must never be exposed to client applications.
+
+15. Supabase Security
+Supabase remains part of the current AfroCom architecture.
+Developers working with Supabase must pay particular attention to:
+Row Level Security
+Authentication policies
+Database permissions
+Storage policies
+Service-role credentials
+API exposure
+Realtime access
+The service-role key is highly privileged and must never be included in:
+Flutter applications
+React applications
+Public repositories
+Client-side JavaScript
+Screenshots
+Documentation
+
+16. Infrastructure Security
+Infrastructure should be protected through:
+Strong authentication
+Least-privilege access
+Secure network configuration
+Firewall rules
+Updated software
+Secure credentials
+Monitoring
+Backups
+Access auditing
+Production infrastructure should not be treated as a personal development environment.
+
+17. Coolify and Deployment Security
+Coolify and other deployment systems may have access to important application infrastructure.
+Developers should:
+Use individual accounts where possible.
+Avoid sharing credentials.
+Protect deployment credentials.
+Avoid exposing internal services unnecessarily.
+Review environment variables carefully.
+Avoid placing secrets in Dockerfiles.
+Keep deployed software updated.
+Limit production access to authorized personnel.
+
+18. Docker and Container Security
+When using containers:
+Use trusted base images.
+Keep images updated.
+Avoid running unnecessary services.
+Do not embed secrets into images.
+Use non-root users where practical.
+Minimize installed packages.
+Scan dependencies and images where practical.
+Keep containers narrowly focused.
+A container should contain what the service needs, not an entire development workstation.
+
+19. Third-Party Services
+Ubujima will use external services for areas such as:
+Payments
+Maps
+Email
+Media
+AI
+Communication
+Analytics
+Infrastructure
+Third-party services must be treated as external trust boundaries.
+Developers should consider:
+What data is being sent?
+Why is it being sent?
+Is the data necessary?
+Who owns the data?
+How is it protected?
+What happens if the provider becomes unavailable?
+What happens if the provider changes its API?
+Sensitive data should not be sent to third parties without an appropriate reason and authorization.
+
+20. Matrix and Communication Security
+Matrix is expected to become an important component of AfroCom's communication architecture.
+Communication infrastructure should consider:
+Authentication
+Authorization
+Encryption
+Session management
+Device management
+Moderation
+Abuse prevention
+Server security
+Data retention
+Federation considerations
+Developers working on Matrix integrations should not bypass established security controls simply to make development easier.
+
+21. Ma'at AI Security
+Ma'at AI introduces additional security considerations.
+AI systems may interact with:
+User data
+Community content
+Business information
+Internal knowledge
+External models
+AI agents
+Automated actions
+AI systems should therefore consider:
+Data minimization
+Prompt injection
+Unauthorized tool use
+Model access control
+Sensitive-data leakage
+AI-generated misinformation
+Abuse prevention
+Human oversight
+Auditability
+AI should not automatically receive unrestricted access to platform systems.
+
+22. Maji Security
+Blockchain systems introduce a different security model.
+Depending on the final Maji architecture, security may involve:
+Private keys
+Wallets
+Smart contracts
+Validators
+Nodes
+Transactions
+Signing infrastructure
+On-chain permissions
+Private keys must receive the highest level of protection.
+They should never be stored in source code, ordinary environment files committed to Git, public repositories or developer chat channels.
+Blockchain functionality should receive dedicated security review before production deployment.
+
+23. Logging
+Logs should help developers understand what happened without unnecessarily exposing sensitive information.
+Do not log:
+Passwords
+Authentication tokens
+Private keys
+API secrets
+Full payment credentials
+Sensitive personal information
+Prefer:
+User authentication failed
+Request ID: abc123
+Reason: invalid credentials
+
+over exposing credentials or sensitive payloads.
+
+24. Error Messages
+Errors should be useful without revealing sensitive implementation details.
+Avoid exposing:
+Database credentials
+Internal network details
+Stack traces to ordinary users
+Secret configuration
+Authentication internals
+Private infrastructure information
+Detailed technical information should generally remain within appropriate internal logs.
+
+25. Dependency Security
+Dependencies should be kept reasonably current.
+Developers should:
+Review dependency changes.
+Avoid unnecessary packages.
+Remove unused dependencies.
+Monitor known vulnerabilities.
+Prefer established packages.
+Understand the licensing implications of dependencies.
+A dependency is part of the software supply chain and therefore part of the security boundary.
+
+26. Open Source Security
+Ubujima intends to progressively open-source selected projects.
+Open source does not mean that everything should be exposed.
+Before publishing a repository, verify that it does not contain:
+Secrets
+Credentials
+Private user data
+Internal infrastructure information
+Proprietary documents
+Unreleased intellectual property
+Private configuration
+Sensitive security information
+Open-source repositories should have appropriate:
+README documentation
+LICENSE
+Contribution guidelines
+Security policy
+Issue management
+Code review practices
+
+27. Security Vulnerability Reporting
+Security vulnerabilities should not normally be disclosed publicly before they have been assessed.
+If a contributor discovers a potentially serious vulnerability:
+Do not exploit it beyond what is necessary to demonstrate the issue.
+Do not publish it publicly.
+Do not share it in a general Discord or WhatsApp channel.
+Notify the appropriate project/security lead.
+Provide enough information to reproduce the issue safely.
+Allow the team to assess and remediate the vulnerability.
+A formal security reporting process will be established as the open-source program matures.
+
+28. Security Incidents
+A security incident may include:
+Exposed credentials
+Unauthorized access
+Data leakage
+Account compromise
+Malicious code
+Suspicious repository activity
+Production compromise
+Serious vulnerability
+Unauthorized infrastructure access
+When an incident occurs:
+Detect
+  │
+  ▼
+Contain
+  │
+  ▼
+Assess
+  │
+  ▼
+Remediate
+  │
+  ▼
+Recover
+  │
+  ▼
+Learn
+
+The priority is to protect users and limit damage.
+Do not conceal security incidents from the responsible project leadership.
+
+29. Security and Contributors
+Every contributor is responsible for protecting the systems they have access to.
+Contributors should:
+Protect their accounts.
+Use appropriate authentication.
+Keep credentials private.
+Follow repository permissions.
+Avoid unnecessary production access.
+Report vulnerabilities.
+Keep development dependencies reasonably updated.
+Follow project security practices.
+Security is not exclusively the responsibility of the infrastructure team.
+
+30. Security During the Supabase Transition
+The transition from Supabase to custom services must not reduce security.
+During the hybrid period:
+                API Layer
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+          ▼                     ▼
+      Supabase             Custom Services
+          │                     │
+          │                     │
+       Security              Security
+       Controls              Controls
+          │                     │
+          └──────────┬──────────┘
+                     ▼
+                   Users
+
+Each new service must establish its own appropriate security boundaries.
+Migration should be performed incrementally rather than creating a large security-critical rewrite.
+
+31. Security Checklist for New Services
+Before introducing a new production service, developers should consider:
+What data does the service handle?
+Who can access it?
+How is authentication handled?
+How is authorization handled?
+What APIs are exposed?
+Are inputs validated?
+Are secrets protected?
+Are logs safe?
+Is rate limiting required?
+Are dependencies reviewed?
+Are backups required?
+Is monitoring available?
+Can the service be recovered?
+Can access be revoked?
+What happens if the service is compromised?
+What happens if the service becomes unavailable?
+
+32. Security Principle for Developers
+Before merging or deploying a feature, ask:
+If this feature were abused, what could go wrong?
+Then ask:
+What controls prevent that outcome?
+And finally:
+How would we know if those controls failed?
+This mindset should become part of normal development rather than a separate security exercise.
+
+33. Long-Term Security Direction
+As Ubujima grows, the security program will progressively mature toward:
+Basic Controls
+      │
+      ▼
+Centralized Secrets
+      │
+      ▼
+Automated Security Checks
+      │
+      ▼
+Centralized Logging
+      │
+      ▼
+Monitoring & Alerting
+      │
+      ▼
+Security Reviews
+      │
+      ▼
+Formal Incident Response
+      │
+      ▼
+Independent Security Testing
+
+The exact timing will depend on platform maturity, risk profile, funding and operational requirements.
+
+34. Guiding Principle
+Security should enable the ecosystem rather than unnecessarily obstruct it.
+Our objective is:
+Build systems that are secure enough for today's requirements, designed for tomorrow's scale, and continuously improved as the platform and threat landscape evolve.

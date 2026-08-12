@@ -1,0 +1,503 @@
+---
+sidebar_position: 3
+title: Infrastructure
+---
+
+# Infrastructure
+
+**Lean today. Controlled tomorrow. Scalable when needed.**
+
+Ubujima's infrastructure strategy is designed around a simple principle:
+
+> **Use the simplest infrastructure that reliably supports the product today while creating a practical path toward greater control tomorrow.**
+
+We are intentionally avoiding unnecessary infrastructure complexity while AfroCom, Ma'at AI and Maji are still evolving.
+
+Our infrastructure will grow progressively with the products, users, engineering team and operational requirements.
+
+---
+
+## 1. Current Technology Stack
+
+The current AfroCom development environment includes:
+
+| Area | Current Technology |
+|---|---|
+| Mobile | Flutter |
+| Web | React |
+| Backend | Supabase |
+| Database | PostgreSQL through Supabase |
+| Media | Cloudinary |
+| Source Control | GitHub |
+| Project Management | ClickUp |
+| Developer Communication | Discord / WhatsApp |
+| Real-time Communication | Matrix (evolving) |
+| Deployment / Hosting | Coolify and managed services |
+| AI / Data | Python and AI/ML tooling |
+
+This stack allows the team to develop and deploy without maintaining a large infrastructure footprint.
+
+---
+
+# 2. Infrastructure Philosophy
+
+Our infrastructure decisions should prioritize:
+
+### Reliability
+
+Systems should remain available and recoverable.
+
+### Security
+
+Infrastructure must protect user data, credentials and platform services.
+
+### Cost Efficiency
+
+Infrastructure should be proportional to actual usage.
+
+### Portability
+
+Where practical, systems should avoid unnecessary dependence on a single infrastructure provider.
+
+### Automation
+
+Repeated operational tasks should increasingly be automated.
+
+### Observability
+
+We should know when systems fail, degrade or behave unexpectedly.
+
+### Simplicity
+
+Complexity should be introduced only when it provides meaningful value.
+
+---
+
+# 3. Current AfroCom Architecture
+
+Today, much of AfroCom's backend functionality is provided by Supabase.
+
+Conceptually:
+
+```text
+                   AfroCom
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+       Flutter                  React
+        Mobile                    Web
+          │                       │
+          └───────────┬───────────┘
+                      │
+                      ▼
+                  Supabase
+                      │
+        ┌─────────────┼─────────────┐
+        │             │             │
+     Database       Auth         Realtime
+        │
+        ▼
+    PostgreSQL
+
+                      +
+                 Cloudinary
+                      │
+                      ▼
+              Media Storage /
+               Optimization
+
+This architecture remains an important part of AfroCom's current platform.
+Developers should not assume that every current component needs to be replaced.
+
+4. Why We Use Managed Services
+Managed services allow a small team to concentrate on product development instead of spending excessive time maintaining infrastructure.
+For example, using Supabase currently reduces the amount of infrastructure we need to operate ourselves.
+Similarly, Cloudinary provides media infrastructure that would otherwise require significant engineering and operational work.
+Managed infrastructure is therefore not considered a temporary failure or architectural mistake.
+It is a deliberate trade-off.
+The question is:
+When does owning the infrastructure create more value than using the managed service?
+
+5. The Supabase Transition
+As AfroCom and the wider Ubujima ecosystem grow, we expect to gradually introduce internally controlled backend services.
+This does not mean:
+"Replace Supabase immediately."
+Instead:
+                   CURRENT
+                       │
+                       ▼
+                  Supabase
+                       │
+                       │
+                New capability
+                       │
+                       ▼
+                New Service
+                       │
+                       ▼
+             Transitional Period
+                       │
+             ┌─────────┴─────────┐
+             │                   │
+          Supabase          Custom Services
+             │                   │
+             └─────────┬─────────┘
+                       │
+                       ▼
+                Future Platform
+
+During migration, Supabase and custom services may operate simultaneously.
+
+6. Criteria for Replacing a Managed Service
+A managed service should only be replaced when there is a clear reason.
+Potential reasons include:
+Cost at scale
+Performance limitations
+Architectural limitations
+Vendor dependency
+Data control requirements
+Custom functionality
+Infrastructure requirements
+Compliance requirements
+Integration requirements
+Strategic platform independence
+The decision should consider both the technical benefit and the operational cost.
+Owning infrastructure also means owning:
+Maintenance
+Security
+Monitoring
+Backups
+Updates
+Incident response
+Scaling
+Reliability
+Therefore:
+Self-hosting is not automatically better.
+
+7. Future Infrastructure Direction
+The long-term infrastructure is expected to support independently deployable services.
+A conceptual model is:
+                       Clients
+                           │
+                           ▼
+                     API Gateway
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+          ▼                ▼                ▼
+       Services         AI Services      Blockchain
+          │                │                │
+          └────────────────┼────────────────┘
+                           │
+                     Data Services
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+           Database      Storage      Analytics
+              │
+              ▼
+         Infrastructure
+
+Individual services should be independently deployable where there is a meaningful reason to do so.
+
+8. Containers
+Containers are expected to become increasingly important as custom services are introduced.
+Containerization provides:
+Consistent development environments
+Reproducible deployments
+Service isolation
+Easier migration
+Portable workloads
+Simplified deployment automation
+A typical service may eventually follow a model such as:
+Source Code
+    │
+    ▼
+Docker Image
+    │
+    ▼
+Container Registry
+    │
+    ▼
+Deployment Platform
+    │
+    ▼
+Running Service
+
+Developers should provide appropriate container configuration for services that require independent deployment.
+
+9. Coolify
+Coolify is part of the current infrastructure toolkit and provides a practical way to deploy applications and services without immediately introducing significant infrastructure-management overhead.
+It can support deployments such as:
+Web applications
+APIs
+Backend services
+Containers
+Databases
+Internal tools
+As the platform grows, Coolify may continue to be used for appropriate workloads even as infrastructure becomes more sophisticated.
+The goal is not to replace a useful tool simply because a larger infrastructure architecture is available.
+
+10. Development Environments
+Development should distinguish between:
+Development
+     │
+     ▼
+Testing / Staging
+     │
+     ▼
+Production
+
+Developers should avoid making changes directly to production systems unless explicitly authorized.
+Each environment should use appropriate:
+Configuration
+Credentials
+API keys
+Databases
+Storage
+Logging
+Access permissions
+Production credentials must never be committed to source control.
+
+11. Environment Variables and Secrets
+Secrets must be treated as sensitive infrastructure assets.
+Examples include:
+Database credentials
+API keys
+Authentication secrets
+Private keys
+Cloudinary credentials
+Payment credentials
+AI provider keys
+Deployment credentials
+Never commit secrets into GitHub.
+Do not place production credentials inside source code.
+Use appropriate environment variables and secret-management mechanisms.
+Example:
+DATABASE_URL=...
+API_KEY=...
+JWT_SECRET=...
+
+Actual production values should never appear in documentation or repositories.
+
+12. CI/CD
+GitHub is the central source-control platform for Ubujima development.
+Where appropriate, GitHub Actions should automate:
+Developer
+    │
+    ▼
+Git Commit
+    │
+    ▼
+Pull Request
+    │
+    ▼
+Automated Checks
+    │
+    ├── Tests
+    ├── Linting
+    ├── Build
+    └── Security Checks
+    │
+    ▼
+Review
+    │
+    ▼
+Merge
+    │
+    ▼
+Deployment
+
+Automation should reduce manual deployment errors and make releases more predictable.
+
+13. Backups
+Important data and infrastructure configuration must have appropriate backup strategies.
+Backup planning should consider:
+Database backups
+Media
+Configuration
+Infrastructure configuration
+Critical secrets recovery
+Source code
+Deployment configuration
+Backups should not simply exist.
+They should periodically be tested for restoration.
+A backup that has never been restored is an assumption, not a recovery strategy.
+
+14. Monitoring and Observability
+As the number of services increases, observability becomes increasingly important.
+We should progressively monitor:
+Service availability
+Response times
+Error rates
+Resource usage
+Database health
+Storage usage
+API traffic
+Authentication events
+Deployment status
+Security events
+At minimum, production services should provide useful logs.
+As the platform matures, centralized monitoring, metrics and distributed tracing may be introduced.
+
+15. Infrastructure and Cost Management
+Infrastructure spending should be monitored as a first-class engineering concern.
+Every service introduces potential costs including:
+Compute
+Storage
+Database
+Bandwidth
+Media delivery
+AI inference
+Third-party APIs
+Monitoring
+Backups
+Developers should consider cost when designing systems.
+For example:
+If a feature can perform an operation once per day instead of once per second without affecting the user experience, the cheaper design may be the better design.
+Cost optimization should not compromise security or reliability, but neither should infrastructure be over-engineered before demand exists.
+
+16. Infrastructure as Code
+As infrastructure becomes more complex, configuration should increasingly become reproducible.
+Where appropriate, infrastructure should be represented through code or version-controlled configuration.
+This allows:
+Repeatable deployments
+Easier recovery
+Peer review
+Change tracking
+Environment consistency
+The exact tooling will evolve with the infrastructure.
+
+17. Scaling Strategy
+Scaling should happen according to actual system requirements.
+The preferred progression is generally:
+Efficient single service
+        │
+        ▼
+Vertical scaling
+        │
+        ▼
+Horizontal scaling
+        │
+        ▼
+Service separation
+        │
+        ▼
+Distributed infrastructure
+
+We should avoid introducing distributed-system complexity before the product requires it.
+
+18. Data and Storage
+Different types of data may eventually require different storage strategies.
+Examples include:
+Transactional Data
+User accounts, relationships, posts and application state.
+Media
+Images, video and audio.
+Analytics
+Usage events, metrics and aggregated data.
+AI Data
+Datasets, embeddings, model-related information and AI knowledge systems.
+Blockchain Data
+On-chain and supporting off-chain data.
+Each category should use infrastructure appropriate to its requirements.
+
+19. Infrastructure for Ma'at AI
+Ma'at AI may eventually require infrastructure different from the standard AfroCom application stack.
+Potential components include:
+Python services
+AI/ML workloads
+Data pipelines
+Model serving
+Vector databases
+GPU workloads where justified
+Model evaluation
+AI observability
+AI infrastructure should remain modular so that Ma'at AI can evolve independently while exposing appropriate APIs to AfroCom.
+
+20. Infrastructure for Maji
+Maji may require specialized infrastructure depending on its eventual blockchain architecture.
+Potential components may include:
+Blockchain nodes
+Validators
+Wallet infrastructure
+Indexing services
+Smart-contract infrastructure
+Off-chain services
+Monitoring
+Key management
+These components should be introduced only when the Maji architecture has reached the appropriate development stage.
+
+21. Infrastructure Security
+Infrastructure security includes more than application security.
+Developers should consider:
+Access control
+SSH/security credentials
+Firewall configuration
+Network isolation
+Secrets management
+Database access
+Backup security
+Dependency vulnerabilities
+Container security
+Deployment permissions
+Monitoring and audit logs
+Production infrastructure should follow the principle of least privilege.
+
+22. The Migration Roadmap
+The infrastructure evolution can be summarized as:
+Phase 1 — Current
+Flutter
+React
+  │
+  ▼
+Supabase
+  │
+  └── Cloudinary
+
+Phase 2 — Hybrid
+Flutter / React
+       │
+       ▼
+   API Layer
+       │
+   ┌───┴────┐
+   ▼        ▼
+Supabase  New Services
+
+Phase 3 — Platform
+Clients
+   │
+   ▼
+API Gateway
+   │
+   ▼
+Domain Services
+   │
+   ├── Data
+   ├── AI
+   ├── Communication
+   ├── Commerce
+   ├── Fintech
+   └── Other Services
+
+Phase 4 — Ubujima Ecosystem
+                   Ubujima Platform
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+       AfroCom          Ma'at AI           Maji
+          │                │                │
+          └────────────────┼────────────────┘
+                           │
+                 Shared Infrastructure
+
+The actual timing of each phase will depend on product growth, engineering capacity, funding, technical requirements and operational maturity.
+
+23. Infrastructure Principle
+The infrastructure should evolve with the organization.
+We do not need to own everything today.
+We do need to ensure that today's decisions do not prevent us from owning or replacing critical components tomorrow.
+The guiding principle is:
+Managed when sensible. Self-controlled when valuable. Open where practical. Automated wherever possible.
+Our infrastructure should enable developers to move quickly today while creating a reliable foundation for the larger Ubujima ecosystem of tomorrow.

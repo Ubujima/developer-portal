@@ -1,0 +1,670 @@
+---
+sidebar_position: 5
+title: Development Standards
+---
+
+ # Development Standards
+
+**Build clearly. Review carefully. Ship deliberately.**
+
+Ubujima is being built through a combination of core contributors, collaborators, open-source contributors and specialized teams.
+
+Development standards provide a common way of working across projects.
+
+The purpose is not to create unnecessary bureaucracy.
+
+The purpose is to make it easier for people who have never worked together before to contribute to the same codebase without stepping on each other's toes.
+
+---
+
+# 1. Our Development Philosophy
+
+We value:
+
+- Simple solutions
+- Clear code
+- Small changes
+- Reusable components
+- Good documentation
+- Automated testing
+- Security
+- Code review
+- Open communication
+- Maintainability
+
+The goal is not to write the most sophisticated code.
+
+The goal is to build software that another developer can understand, maintain and improve.
+
+> **Code is read more often than it is written.**
+
+---
+
+# 2. Source Control
+
+GitHub is the central source-control platform for Ubujima development.
+
+Repositories should contain:
+
+- Source code
+- Configuration required for development
+- Documentation
+- Tests
+- Appropriate automation
+
+Repositories should not contain:
+
+- Secrets
+- Production credentials
+- Private user data
+- Unnecessary generated files
+- Local development artifacts
+- Large binaries unless specifically required
+
+---
+
+# 3. Branching
+
+The exact branching strategy may vary by repository.
+
+For most projects, contributors should avoid making feature development directly on the production branch.
+
+A typical workflow is:
+
+```text
+main
+ │
+ ├── feature/user-profile
+ │
+ ├── feature/chat-search
+ │
+ ├── fix/notification-error
+ │
+ └── docs/api-guide
+
+Branches should have names that communicate their purpose.
+Examples:
+feature/user-profile
+feature/matrix-integration
+fix/login-error
+fix/image-upload
+docs/api-guide
+refactor/authentication
+
+Avoid vague names such as:
+test
+new
+stuff
+changes
+mybranch
+
+
+4. Commits
+Commits should represent meaningful changes.
+Good:
+Add user profile editing
+Fix notification permission handling
+Add Matrix authentication service
+Update API documentation
+
+Avoid commits such as:
+changes
+stuff
+fix
+test
+asdf
+final
+final2
+final-final
+
+A good commit should allow another developer to understand what changed without opening every file.
+
+5. Small Commits
+Prefer small, logical commits over very large commits containing unrelated changes.
+For example:
+Add profile API
+Add profile validation
+Add profile tests
+Update profile documentation
+
+is generally easier to review than:
+Update entire application
+
+Small commits also make debugging and reverting changes easier.
+
+6. Pull Requests
+Changes to shared code should normally be submitted through a Pull Request.
+A Pull Request should communicate:
+What changed?
+Describe the implementation.
+Why was it changed?
+Describe the problem or requirement.
+How was it tested?
+Explain the testing performed.
+Anything reviewers should know?
+Mention known limitations, migration requirements or future work.
+A good Pull Request should make the reviewer's job easier.
+
+7. Pull Request Example
+A simple Pull Request description may look like:
+## What
+
+Added API support for editing user profiles.
+
+## Why
+
+Users currently cannot update selected profile information.
+
+## Changes
+
+- Added profile update endpoint
+- Added validation
+- Added authorization checks
+- Added tests
+- Updated API documentation
+
+## Testing
+
+Tested locally and verified successful update and validation failures.
+
+## Notes
+
+Does not yet include profile image updates.
+
+
+8. Code Review
+Code review is part of development rather than a personal judgment of the developer.
+Reviewers should focus on:
+Correctness
+Security
+Maintainability
+Performance
+Architecture
+Testing
+User impact
+Consistency
+Comments should be respectful and specific.
+Prefer:
+"Could we move this validation into the service layer so that other clients receive the same protection?"
+over:
+"This is wrong."
+
+9. Review Responsibilities
+The author is responsible for making the change understandable.
+The reviewer is responsible for helping identify problems before they reach production.
+Neither role should assume that the other person will catch everything.
+A review is a second set of eyes, not a replacement for testing.
+
+10. Testing
+Testing should be proportional to the importance and risk of the feature.
+Potential levels include:
+Unit Tests
+    │
+    ▼
+Integration Tests
+    │
+    ▼
+API Tests
+    │
+    ▼
+End-to-End Tests
+    │
+    ▼
+Manual Verification
+
+Not every feature requires every level.
+However, important business logic, security-sensitive functionality and critical workflows should have appropriate automated tests.
+
+11. Test Before Requesting Review
+Before submitting a Pull Request, developers should normally:
+Run the project locally.
+Run relevant tests.
+Check for linting or formatting errors.
+Verify the feature manually where appropriate.
+Review their own changes.
+Confirm no secrets or unintended files were included.
+Do not make the reviewer discover obvious build failures.
+
+12. Code Formatting
+Projects should use the formatter and linting tools appropriate to their technology.
+For example:
+React / TypeScript
+Use the repository's configured:
+Formatter
+ESLint
+TypeScript checks
+Flutter / Dart
+Use the repository's configured:
+Dart formatter
+Analyzer
+Tests
+Developers should follow the existing repository configuration rather than introducing competing formatting systems.
+
+13. Naming
+Names should communicate intent.
+Prefer:
+userProfile
+notificationService
+createOrder()
+getUserById()
+
+over:
+data
+thing
+process()
+doStuff()
+
+Names should be understandable to a developer who did not write the original code.
+
+14. Comments
+Comments should explain why, not simply repeat what the code does.
+Poor:
+// Add one to count
+count = count + 1;
+
+Useful:
+// The external provider occasionally returns duplicate events.
+// Increment only after confirming the event has not already been processed.
+count = count + 1;
+
+Do not leave large amounts of commented-out obsolete code in the repository.
+Git already preserves history.
+
+15. Documentation
+Important functionality should be documented.
+Documentation may include:
+README files
+API documentation
+Architecture documentation
+Setup instructions
+Configuration requirements
+Deployment instructions
+Troubleshooting information
+Developer guides
+If a feature is difficult to understand, documentation is part of completing the feature.
+
+16. Definition of Done
+A feature should generally not be considered complete simply because the code works on the developer's machine.
+A reasonable Definition of Done includes:
+Requirement understood
+Implementation completed
+Appropriate tests added
+Existing tests still pass
+Security considerations reviewed
+Documentation updated where necessary
+Code reviewed
+Build succeeds
+Deployment requirements identified
+Known limitations documented
+The exact checklist may differ by project.
+
+17. Issue Management
+GitHub Issues and/or the project's designated project-management system should be used to track work.
+An issue should communicate:
+Problem
+Context
+Expected outcome
+Acceptance criteria
+Relevant references
+Avoid turning chat messages into the permanent source of truth for technical requirements.
+Important decisions should eventually be captured in the appropriate repository documentation or issue.
+
+18. ClickUp and GitHub
+Ubujima currently uses both ClickUp and GitHub.
+They serve different purposes.
+ClickUp
+Used primarily for:
+Project planning
+Roadmaps
+Organizational tasks
+Coordination
+Milestones
+GitHub
+Used primarily for:
+Source code
+Issues
+Pull Requests
+Code review
+Technical discussions
+Repository documentation
+Open-source collaboration
+The exact division may evolve as the engineering organization matures.
+
+19. Communication
+Current communication tools include:
+Discord
+WhatsApp
+GitHub
+ClickUp
+Developers should use the appropriate channel for the type of communication.
+GitHub
+Technical implementation and code-specific discussion.
+ClickUp
+Project coordination and tasks.
+Discord
+Developer/community collaboration.
+WhatsApp
+Operational or direct communication where appropriate.
+Important technical decisions should not exist only in private messages.
+
+20. Architecture Before Implementation
+When implementing a significant feature, developers should understand where it belongs in the broader architecture.
+Before creating a new service, ask:
+Does this capability already exist?
+        │
+        ▼
+Who owns this domain?
+        │
+        ▼
+Does it belong in an existing service?
+        │
+        ▼
+Does it require a new service?
+        │
+        ▼
+What API should expose it?
+
+Avoid creating a new microservice simply because microservices are fashionable.
+
+21. Avoid Premature Complexity
+The long-term Ubujima platform will contain many services.
+That does not mean every feature needs to become its own service immediately.
+A good implementation may initially live inside an existing service and later be separated when there is a clear reason.
+Consider separation when there is a meaningful difference in:
+Scaling requirements
+Security boundary
+Data ownership
+Deployment lifecycle
+Team ownership
+Technology requirements
+Reliability requirements
+
+22. Supabase During the Transition
+Supabase remains an important part of the current AfroCom architecture.
+Developers should not rewrite existing Supabase functionality simply because the long-term architecture will use custom services.
+Instead:
+Current functionality
+        │
+        ▼
+Improve / stabilize
+        │
+        ▼
+Identify migration boundary
+        │
+        ▼
+Build replacement
+        │
+        ▼
+Run hybrid architecture
+        │
+        ▼
+Migrate
+        │
+        ▼
+Retire old implementation
+
+Migration should be driven by a clear benefit.
+
+23. API Contracts
+When a feature exposes an API, the API contract should be clear.
+Developers should consider:
+Endpoint
+Method
+Authentication
+Authorization
+Request format
+Response format
+Error behavior
+Versioning
+Rate limits
+Documentation
+API changes should consider existing clients.
+Remember that AfroCom may have multiple clients:
+Flutter Mobile
+React Web
+Future Clients
+Third-party Integrations
+Internal Services
+
+A backend change can therefore affect more than one application.
+
+24. Database Changes
+Database schema changes should be treated carefully.
+Where supported, schema changes should be:
+Version controlled
+Reproducible
+Reviewable
+Tested
+Documented where necessary
+Avoid manually changing production databases without a documented migration process.
+
+25. Backward Compatibility
+Developers should consider existing clients before changing APIs or data structures.
+For example:
+Old Mobile App ──► API
+New Mobile App ──► API
+React Web ───────► API
+
+A backend change that works only with the newest client may break users who have not yet updated.
+Where breaking changes are unavoidable, provide a migration strategy.
+
+26. Performance
+Performance should be considered, but optimization should be evidence-driven.
+Developers should watch for:
+Unnecessary database queries
+Large API responses
+Excessive network requests
+Unoptimized images
+Expensive repeated computation
+Memory leaks
+Inefficient rendering
+Unnecessary AI calls
+Measure before introducing complicated optimizations.
+
+27. AI Features
+AI functionality should be treated as a service capability rather than scattered randomly throughout the application.
+Where possible:
+AfroCom
+   │
+   ▼
+Ma'at AI API
+   │
+   ├── Recommendation
+   ├── Content assistance
+   ├── Well-being
+   ├── Automation
+   └── Other AI capabilities
+
+This allows AI capabilities to evolve independently from the primary application.
+Developers should also consider AI cost, latency, privacy and abuse.
+
+28. Open Source Development
+Ubujima intends to progressively open-source selected projects.
+Open-source development should follow the same engineering standards as internal development, with additional consideration for:
+Public documentation
+Contributor experience
+Licensing
+Security
+Issue management
+Code review
+Community communication
+Release management
+Public code should be treated as production-quality code.
+
+29. Contribution Quality
+A contribution is valuable when it is:
+Correct
+Understandable
+Maintainable
+Tested
+Documented where necessary
+Secure
+Aligned with the architecture
+The amount of code contributed is not the primary measure of contribution.
+A small, well-designed improvement can be more valuable than a large feature that creates long-term technical debt.
+
+30. Technical Debt
+Technical debt is sometimes unavoidable.
+It becomes dangerous when it is invisible.
+When deliberately taking a shortcut, document:
+What was deferred?
+Why was it deferred?
+What is the impact?
+When should it be revisited?
+
+Example:
+TODO:
+Replace temporary Supabase implementation with dedicated service
+once communication service reaches migration stage.
+
+
+31. Dependency Management
+Before adding a new dependency, consider:
+Is it necessary?
+Is the project maintained?
+Is the license compatible?
+Is it secure?
+Does it introduce unnecessary complexity?
+Could existing functionality solve the problem?
+What happens if the dependency disappears?
+A dependency should solve a meaningful problem.
+
+32. Licensing
+Developers must respect the licenses of third-party code and packages.
+Before introducing external code, verify:
+License
+Usage requirements
+Attribution requirements
+Redistribution requirements
+Compatibility with the repository's license
+This is particularly important as Ubujima increases its open-source activity.
+
+33. Release Discipline
+Production releases should be intentional.
+Before release:
+Code
+ │
+ ▼
+Review
+ │
+ ▼
+Tests
+ │
+ ▼
+Build
+ │
+ ▼
+Release Candidate
+ │
+ ▼
+Deployment
+ │
+ ▼
+Verification
+
+Where practical, releases should have a clear version or release identifier.
+
+34. Rollback
+Every important deployment should have a reasonable rollback strategy.
+Before deployment, developers should know:
+If this release causes a serious problem, how do we return to the previous working state?
+Rollback may involve:
+Previous application version
+Previous container image
+Database migration reversal
+Feature flags
+Configuration rollback
+Service restoration
+Not every database change can safely be reversed, so migration planning is particularly important.
+
+35. Production Changes
+Production changes should be limited to authorized contributors.
+Avoid:
+"Let me quickly change production and see if it works."
+
+Prefer:
+Development
+    ↓
+Testing
+    ↓
+Review
+    ↓
+Staging
+    ↓
+Production
+
+Emergency changes may follow a different process, but should be documented afterward.
+
+36. Developer Local Environment
+Developers should be able to establish a working environment using documented instructions.
+A repository should ideally explain:
+Required software
+Required versions
+Repository setup
+Dependencies
+Environment variables
+Database requirements
+How to run locally
+How to run tests
+How to build
+How to troubleshoot common problems
+A new contributor should not have to reconstruct the entire development environment from old chat messages.
+
+37. Technology Choices
+Developers are encouraged to suggest better technologies and approaches.
+However, new technologies should be evaluated against:
+Existing architecture
+Team expertise
+Maintenance requirements
+Cost
+Security
+Licensing
+Performance
+Long-term compatibility
+The objective is not technological novelty.
+The objective is building a durable platform.
+
+38. Documentation-Driven Collaboration
+Important architectural decisions should be recorded.
+Examples include:
+Why a service was created
+Why a database was selected
+Why a third-party provider was chosen
+Why an API behaves a certain way
+Why a migration was delayed
+Documentation should preserve institutional knowledge.
+This becomes increasingly important as the contributor community grows.
+
+39. When in Doubt
+If you are unsure about an implementation:
+Search the repository.
+Read the relevant documentation.
+Check existing patterns.
+Review related issues or Pull Requests.
+Ask the appropriate project channel.
+Propose the change before implementing a large architectural modification.
+Do not spend several days building something that could have been clarified in a ten-minute discussion.
+
+40. Developer Checklist
+Before submitting work:
+I understand the requirement.
+I checked existing implementations.
+I followed the repository's conventions.
+I did not commit secrets.
+I considered security.
+I added appropriate tests.
+I ran the relevant tests.
+I checked the build.
+I updated documentation where necessary.
+I reviewed my own changes.
+I created a clear Pull Request.
+I identified known limitations.
+
+41. The Ubujima Standard
+We are building software that we expect other people to inherit.
+That means every contributor should leave the codebase at least as understandable and maintainable as they found it.
+The standard is not:
+"It works on my machine."
+The standard is:
+It works, it is understandable, it is appropriately tested, it is secure, and another developer can continue the work.
+
