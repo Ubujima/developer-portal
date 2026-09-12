@@ -25,6 +25,13 @@ const sidebars: SidebarsConfig = {
     'engineering/security',
     'engineering/development-standards',
   ],
+  
+  opportunitiesSidebar: [
+  'opportunities/overview',
+  'opportunities/react-app-challenge',
+  'opportunities/partner-projects',
+  'opportunities/submit-project',
+],
 };
 
 export default sidebars;
