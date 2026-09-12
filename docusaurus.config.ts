@@ -2,34 +2,27 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+// This runs in Node.js - Don't use client-side code here
+// (browser APIs, JSX, etc.)
 
 const config: Config = {
   title: 'Ubujima Developer Hub',
-  tagline: 'Co-create the technology that shape the Global Afro-community',
+  tagline: 'Co-create technology that shapes the Global Afro-community',
   favicon: 'img/favicon.ico',
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: true,
   },
 
-  // Set the production url of your site here
-  url: 'https://ubujima.github.io',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
+  // GitHub Pages
+  url: 'https://tech.ubujima.com',
   baseUrl: '/',
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'Ubujima', // Usually your GitHub org/user name.
-  projectName: 'developer-portal', // Usually your repo name.
+  organizationName: 'Ubujima',
+  projectName: 'developer-portal',
 
   onBrokenLinks: 'throw',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -41,26 +34,27 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
+
+          // Links "Edit this page" directly to our GitHub repository.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/Ubujima/developer-portal/edit/main/',
         },
+
         blog: {
           showReadingTime: true,
           feedOptions: {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
+
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
+            'https://github.com/Ubujima/developer-portal/edit/main/',
+
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
         },
+
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -69,17 +63,23 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
     colorMode: {
       respectPrefersColorScheme: true,
     },
+
     navbar: {
       title: 'Ubujima',
+
       logo: {
         alt: 'Ubujima Logo',
-        src: 'img/logo.svg',
+
+        // Dark logo on light background
+        src: 'img/ubulogo-black.png',
+
+        // White logo when dark mode is active
+        srcDark: 'img/ubujimalogo-white.png',
       },
+
       items: [
         {
           type: 'docSidebar',
@@ -100,57 +100,89 @@ const config: Config = {
           label: 'Engineering',
         },
         {
+          type: 'docSidebar',
+          sidebarId: 'opportunitiesSidebar',
+          position: 'left',
+          label: 'Opportunities',
+        },
+        {
           href: 'https://github.com/Ubujima',
           label: 'GitHub',
           position: 'right',
         },
       ],
     },
+
     footer: {
       style: 'dark',
+
       links: [
         {
-          title: 'Docs',
+          title: 'Developer Hub',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Getting Started',
+              to: '/docs/getting-started/welcome',
+            },
+            {
+              label: 'Projects',
+              to: '/docs/projects/afrocom',
+            },
+            {
+              label: 'Engineering',
+              to: '/docs/engineering/architecture',
+            },
+            {
+              label: 'Opportunities',
+              to: '/docs/opportunities/overview',
             },
           ],
         },
+
+        {
+          title: 'Build & Collaborate',
+          items: [
+            {
+              label: 'Developer Onboarding',
+              to: '/docs/getting-started/developer-onboarding',
+            },
+            {
+              label: 'Contribution Guide',
+              to: '/docs/getting-started/contribution-guide',
+            },
+            {
+              label: 'React App Challenge',
+              to: '/docs/opportunities/react-app-challenge',
+            },
+            {
+              label: 'Submit a Project',
+              to: '/docs/opportunities/submit-project',
+            },
+          ],
+        },
+
         {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'GitHub',
+              href: 'https://github.com/Ubujima',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              label: 'AfroCom',
+              href: 'https://web.afrocom.app',
             },
             {
               label: 'X',
-              href: 'https://x.com/docusaurus',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://x.com/ubujima',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+
+      copyright: `Copyright © ${new Date().getFullYear()} Ubujima Corporation. Built through Co-creation.`,
     },
+
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,

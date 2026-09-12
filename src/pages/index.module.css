@@ -1,23 +1,186 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
-.heroBanner {
-  padding: 4rem 0;
-  text-align: center;
+.hero {
+  padding: 7rem 0 6rem;
   position: relative;
   overflow: hidden;
 }
 
+.heroContent {
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow,
+.cardEyebrow {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+.heroTitle {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 1.02;
+  margin-bottom: 1.5rem;
+}
+
+.heroSubtitle {
+  max-width: 720px;
+  margin: 0 auto 2rem;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  opacity: 0.82;
+}
+
+.heroButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.section,
+.altSection,
+.finalCta {
+  padding: 5rem 0;
+}
+
+.altSection {
+  background: var(--ifm-background-surface-color);
+}
+
+.sectionHeading {
+  max-width: 720px;
+  margin-bottom: 2.5rem;
+}
+
+.sectionHeading h2,
+.finalCta h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.sectionHeading p,
+.finalCta p {
+  font-size: 1.08rem;
+  line-height: 1.7;
+  opacity: 0.8;
+}
+
+.gridThree {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.gridTwo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.card {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 16px;
+  padding: 2rem;
+  background: var(--ifm-background-color);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ifm-color-primary);
+}
+
+.card h3 {
+  margin-bottom: 0.8rem;
+}
+
+.card p {
+  line-height: 1.7;
+  opacity: 0.8;
+  min-height: 5rem;
+}
+
+.card a {
+  font-weight: 600;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.steps > div {
+  padding: 1.5rem 0;
+}
+
+.steps strong {
+  color: var(--ifm-color-primary);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+.steps h3 {
+  margin-top: 0.6rem;
+}
+
+.steps p {
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+.centerAction {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.finalCta {
+  text-align: center;
+}
+
+.finalCta p {
+  max-width: 720px;
+  margin: 0 auto 2rem;
+}
+
 @media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
+  .hero {
+    padding: 5rem 1.5rem 4rem;
+  }
+
+  .gridThree,
+  .gridTwo {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card p {
+    min-height: auto;
   }
 }
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@media screen and (max-width: 600px) {
+  .hero {
+    padding: 4rem 1rem 3rem;
+  }
+
+  .section,
+  .altSection,
+  .finalCta {
+    padding: 3.5rem 0;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
 }
