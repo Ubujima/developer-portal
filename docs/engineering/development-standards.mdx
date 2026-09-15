@@ -257,3 +257,111 @@ Before beginning a major rewrite, architecture change or large multi-service imp
 This helps prevent duplicated effort and ensures that the proposed direction aligns with the project's goals.
 
 **Good engineering is not only about making something work. It is about making it understandable, secure and sustainable.**
+
+## Git Collaboration Workflow
+
+To keep the Developer Hub stable and make collaboration safer, contributors should avoid working directly on the `main` branch.
+
+The `main` branch should represent the latest stable and deployable version of the project.
+
+### Before Starting Work
+
+Always begin by updating your local `main` branch:
+
+```bash
+git checkout main
+git pull origin main
+
+Then create a new branch for your work:
+
+git checkout -b feature/your-feature-name
+
+Use a clear branch name that reflects the purpose of the work.
+
+Examples:
+
+feature/react-challenge
+feature/developer-onboarding
+docs/api-guidelines
+fix/navigation
+fix/footer
+
+### Making Changes
+
+Work only on your feature or documentation branch.
+
+Before committing, review what changed:
+
+git status
+
+Stage only the files that are part of your intended change where practical:
+
+git add path/to/file
+
+Then commit with a clear message:
+
+git commit -m "Describe the change clearly"
+
+### Push the Branch
+
+Push the branch to GitHub:
+
+git push -u origin feature/your-feature-name
+
+After the upstream branch has been created, future updates can usually be pushed with:
+
+git push
+
+### Pull Requests
+
+Changes should be merged into main through a Pull Request.
+
+Before merging, reviewers should check:
+
+What files changed
+Whether unrelated files were modified
+Whether navigation or configuration was unintentionally changed
+Whether documentation remains accurate
+Whether the project builds successfully
+Whether the change introduces security, privacy, or licensing concerns
+
+Where practical, at least one other contributor should review the Pull Request before it is merged.
+
+
+### Keep Your Branch Updated
+
+If main changes while you are still working, update your branch before final review.
+
+A common approach is:
+
+git checkout main
+git pull origin main
+git checkout feature/your-feature-name
+git merge main
+
+Resolve any conflicts locally, rebuild the project, and test before pushing the updated branch.
+
+
+### After a Pull Request Is Merged
+
+Return to main and update your local copy:
+
+git checkout main
+git pull origin main
+
+The completed local branch can then be removed:
+
+git branch -d feature/your-feature-name
+
+
+### Important Rules
+
+Contributors should not:
+
+Force-push to main
+Develop directly on main
+Merge unreviewed changes that affect shared configuration
+Commit secrets, credentials, tokens, or production configuration
+Include unrelated changes in the same Pull Request
+
+Small, focused Pull Requests are easier to review, test, and maintain.
