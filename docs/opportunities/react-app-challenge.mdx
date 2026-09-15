@@ -4,201 +4,210 @@ sidebar_label: React App Challenge
 sidebar_position: 2
 ---
 
-# React App Challenge
+# AfroCom React App Challenge
 
-The **AfroCom React App Challenge** invites individual developers, development teams, and software agencies to help build the next generation of the AfroCom web application.
+The **AfroCom React App Challenge** invites individual developers, development teams and software agencies to help build the next generation of the AfroCom web experience and the modular platform foundation behind it.
 
 This is not only a competition.
 
-It is also a collaborative development initiative where participants can work together, select issues or development tasks, contribute specific parts of the application, or independently build and submit a complete solution.
+It is a collaborative engineering initiative where participants can select issues or development areas, work together on specific parts of the platform, or independently build and submit a broader solution.
 
-The goal is to bring developers together around a real product while creating meaningful opportunities to contribute, learn, collaborate, and demonstrate technical capability.
+## The Mission
 
-## What We Are Building
+AfroCom's immediate product focus is its **community-networking and opportunity experience**.
 
-AfroCom is the flagship platform of Ubujima Corporation.
+The engineering mission is to strengthen that experience while helping evolve the platform toward a **modular, API-first and service-oriented architecture** capable of supporting future growth.
 
-The immediate focus of the React App Challenge is to build and strengthen AfroCom's **community networking experience** using React and modern web technologies.
+The challenge is therefore intentionally broader than building screens alone.
 
-The challenge should initially focus on the capabilities of the existing AfroCom application rather than attempting to implement the entire long-term AfroCom super-app vision.
+Contributors may work on product experience, frontend architecture, APIs, domain services, testing, DevOps, documentation or platform architecture.
 
-Core areas may include:
+## What We Are Building Toward
 
-- User onboarding and authentication
-- User profiles
+A conceptual direction is:
+
+```text
+                     AfroCom
+                        │
+          ┌─────────────┴─────────────┐
+          │                           │
+     Web Experience             Platform Services
+          │                           │
+     User Experience              API Layer
+     Components                       │
+     Accessibility              Domain Services
+     State & Data                     │
+     Testing                    Data / Events
+          │                           │
+          └─────────────┬─────────────┘
+                        │
+                Modular Platform
+                   Architecture
+```
+
+The objective is **not** to turn every feature into a separate microservice immediately.
+
+Service boundaries should be introduced where they improve ownership, scalability, maintainability, reliability or security.
+
+## Initial Product Scope
+
+The challenge initially focuses on AfroCom's community-networking capabilities rather than the entire long-term super-app vision.
+
+Areas may include:
+
+- User onboarding and identity experiences
+- Profiles and social relationships
 - Community feeds
 - Posts and content sharing
-- Social connections
-- Discovery
-- Search
-- Community interaction
-- Business and opportunity discovery
+- Discovery and search
+- Organizations and opportunities
 - Notifications
-- Responsive web experiences
-- API and backend integration
+- Communication experiences
+- Responsive design
+- Accessibility
+- API integration
+- Testing and quality
 
-Additional functionality may be introduced progressively through issues, milestones, and future development phases.
+Additional areas may be introduced progressively through issues and milestones.
 
----
+# Participation Tracks
 
-# Ways to Participate
+Participants may contribute through one or more tracks.
 
-Participants may contribute in two primary ways.
+## 1. Web Experience Track
 
-## 1. Collaborative Contribution
-
-Individual developers, teams, and development agencies can participate by selecting available GitHub issues, tasks, features, or related groups of issues.
-
-Contributors may work independently or collaborate with other participants.
+Build and improve the AfroCom web experience using React and modern web-development practices.
 
 Examples include:
 
-- Building a UI component
+- Pages and user flows
+- Reusable UI components
+- Responsive behavior
+- Accessibility
+- State management
+- API integration
+- Performance
+- Testing
+- Design-system implementation
+
+## 2. Platform Architecture Track
+
+Help design and implement the modular backend and service foundation supporting the community platform.
+
+Potential areas include:
+
+- API contracts
+- Identity and access boundaries
+- Profile and social-graph services
+- Content services
+- Discovery and search
+- Notifications
+- Communication interfaces
+- Event-driven workflows
+- Observability
+- Service deployment patterns
+- Testing and reliability
+
+Contributors are expected to justify service boundaries rather than create microservices simply for architectural complexity.
+
+## 3. Collaborative Issue Track
+
+Individuals, teams and agencies may select available GitHub issues, tasks, features or related groups of issues.
+
+Contributions may include:
+
+- Building a component
 - Implementing a page
-- Integrating an API
-- Improving responsiveness
-- Fixing bugs
-- Developing a feature
+- Developing a service
+- Designing an API
 - Improving accessibility
+- Fixing bugs
 - Writing tests
 - Improving documentation
-- Working on backend services
 - Improving developer tooling
+- Working on infrastructure or deployment automation
 
-Larger teams or agencies may also take responsibility for a related group of tasks or a defined development area.
+Participants should coordinate through the project's contribution workflow to reduce duplicated work.
 
-Participants should coordinate through the project's contribution workflow to reduce duplicated work and conflicting implementations.
+## 4. Complete Solution Track
 
-## 2. Complete App Submission
+A developer, team or development agency may independently propose and submit a broader implementation covering multiple areas of the challenge.
 
-A developer, team, or development agency may choose to independently build a complete React implementation of the AfroCom community networking application.
+Complete submissions can be reviewed for architecture, user experience, maintainability, security, scalability, documentation and alignment with AfroCom's product direction.
 
-Complete implementations can be submitted for technical review and evaluation.
+A complete submission does not automatically replace an existing implementation or guarantee production deployment.
 
-A complete submission does not automatically replace the existing application or guarantee production deployment.
+# Architecture Principles
 
-Ubujima may evaluate complete implementations based on architecture, user experience, maintainability, performance, security, code quality, scalability, and alignment with AfroCom's product direction.
+Challenge implementations should generally favor:
 
-Strong ideas or implementations may also be incorporated into the broader project through collaboration with the development community.
-
----
-
-# Backend Options
-
-Participants building the React application may work with one of two backend approaches.
-
-## Option A — AfroCom Supabase Backend
-
-Participants may integrate with a designated **non-production AfroCom Supabase environment**.
-
-This provides a faster path for developers who want to focus primarily on the React application, product experience, frontend architecture, and integration with existing AfroCom capabilities.
-
-The challenge environment must not expose or provide access to AfroCom's production infrastructure or production user data.
-
-Access, credentials, API documentation, environment variables, and development requirements will be provided according to contributor needs and project access policies.
-
-This approach is particularly suitable for:
-
-- Frontend contributors
-- UI/UX implementation
-- Feature development
-- Rapid prototyping
-- Existing API integration
-- Developers contributing individual issues or components
-
-## Option B — Scalable Microservices Backend
-
-Participants may also propose or build a new backend architecture using scalable microservices.
-
-The objective is not to recreate every future AfroCom service immediately.
-
-The initial backend should focus on the requirements of AfroCom's **community networking platform as it exists today**, while establishing a foundation that can evolve into a broader service-oriented architecture over time.
-
-A microservices implementation should prioritize:
-
-- Clear service boundaries
-- API-first architecture
+- Clear domain boundaries
+- Stable APIs
+- Modular design
+- Secure defaults
 - Maintainability
-- Security
-- Scalability
-- Observability
-- Containerized deployment
-- Environment isolation
-- Documentation
 - Testability
-- Progressive expansion
-
-Possible service domains may eventually include:
-
-- Authentication and identity
-- User profiles
-- Social graph and connections
-- Posts and content
-- Discovery
-- Search
-- Notifications
-- Communication
-- Media
-- Business and opportunity services
-
-Participants are not expected to implement all future AfroCom microservices as part of the initial challenge.
-
-The first milestone should demonstrate a reliable architecture capable of supporting the current community networking experience and evolving progressively as AfroCom expands.
-
----
-
-# Frontend Direction
-
-The web application should be developed using **React** and the technologies defined by the challenge's technical requirements.
-
-Participants should prioritize:
-
-- Modular architecture
-- Reusable components
-- Responsive design
+- Observability
+- Progressive scalability
 - Accessibility
-- Performance
-- Maintainability
-- Clear state management
-- Clean API integration
-- Secure development practices
-- Testing
 - Documentation
+- Operational simplicity
 
-Where official AfroCom designs, user flows, design systems, or Figma resources are provided, participants should use them as the primary product reference.
+Microservices are a means, not the objective.
 
----
+The objective is a platform that can evolve safely as product requirements and scale grow.
+
+# Development Environments and Technical Access
+
+The public challenge documentation intentionally does not publish internal backend vendors, infrastructure topology, privileged endpoints or environment configuration.
+
+Approved contributors will receive the development environments, API specifications, design resources, credentials and implementation information required for their selected work according to project access policies.
+
+Production access is not required for normal challenge participation.
 
 # Working Through GitHub
 
 Development will be coordinated through GitHub.
 
-Participants will be able to identify available work through:
+Participants will be able to identify work through:
 
 - Issues
 - Feature requests
 - Development tasks
+- Epics
 - Milestones
 - Technical discussions
 - Documentation tasks
-- Backend tasks
+- Architecture tasks
 - UI/UX implementation tasks
 
 Before beginning substantial work, contributors should review the relevant issue and communicate their intention to work on it.
 
-Where appropriate, issues may be assigned to contributors or teams to reduce duplicated effort.
+Larger teams or agencies interested in taking responsibility for an epic or development area should coordinate with Ubujima before beginning implementation.
 
-Development agencies or teams interested in taking responsibility for a larger development area should coordinate with Ubujima before beginning the work.
+# Initial Development Areas
 
----
+The first challenge backlog may be organized around areas such as:
+
+- **Identity & Onboarding**
+- **Profiles & Connections**
+- **Community Feed & Content**
+- **Discovery & Search**
+- **Organizations & Opportunities**
+- **Notifications**
+- **Responsive UI & Design System**
+- **API & Service Foundations**
+- **Testing, Security & DevOps**
+
+These areas can be divided into smaller issues suitable for individuals as well as larger epics suitable for coordinated teams or agencies.
 
 # Contribution Workflow
 
 A typical contribution may follow this process:
 
 1. Explore the project and documentation.
-2. Review available GitHub issues.
-3. Select an issue or development area.
+2. Review available GitHub issues or epics.
+3. Select a development area.
 4. Coordinate with maintainers where necessary.
 5. Create a branch or fork.
 6. Build and test the contribution.
@@ -209,8 +218,6 @@ A typical contribution may follow this process:
 
 Participants should also review the [Contribution Guide](../getting-started/contribution-guide) and [Developer Onboarding](../getting-started/developer-onboarding) documentation.
 
----
-
 # For Development Agencies
 
 Software agencies are welcome to participate.
@@ -218,39 +225,37 @@ Software agencies are welcome to participate.
 An agency may:
 
 - Contribute individual features
-- Take ownership of related groups of issues
+- Take responsibility for related groups of issues
 - Collaborate with individual contributors
 - Provide specialist engineering capacity
-- Work on frontend or backend infrastructure
-- Submit a complete implementation
+- Work on frontend or platform architecture
+- Submit a broader implementation
 
-Participation in the challenge does not automatically establish a commercial contract, vendor relationship, equity arrangement, or entitlement to compensation.
+Participation in the challenge does not automatically establish a commercial contract, vendor relationship, equity arrangement or entitlement to compensation.
 
-Any commercial engagement, compensation, incentive, award, or other arrangement must be separately agreed with Ubujima.
-
----
+Any commercial engagement, compensation, incentive, award or other arrangement must be separately agreed with Ubujima.
 
 # Complete Submission Requirements
 
-Developers or teams submitting a complete implementation should be prepared to provide:
+Developers or teams submitting a broader implementation should be prepared to provide:
 
 - Source code
 - Setup instructions
 - Architecture documentation
-- Environment configuration instructions
+- Configuration instructions
 - API documentation where applicable
 - Testing instructions
 - Known limitations
-- Deployment instructions
+- Deployment guidance
 - Dependency and licensing information
 
-Additional submission requirements will be published before final evaluation.
-
----
+Additional submission requirements may be published for specific challenge milestones.
 
 # Evaluation
 
-Contributions and complete implementations may be evaluated based on factors such as:
+Contributions may be evaluated according to their scope and purpose.
+
+Relevant factors may include:
 
 - Functional quality
 - User experience
@@ -266,39 +271,30 @@ Contributions and complete implementations may be evaluated based on factors suc
 - Collaboration
 - Alignment with AfroCom's product direction
 
-Different contribution types may be evaluated differently.
-
-A contributor implementing one excellent service or feature should not necessarily be compared directly with a team submitting an entire application.
-
----
+A contributor implementing one excellent service or feature should not necessarily be compared directly with a team submitting a broader application.
 
 # Open Source and Intellectual Property
 
-The React App Challenge is designed to encourage collaborative development.
-
-However, participants must only contribute code, assets, libraries, designs, and other materials they have the legal right to contribute.
+Participants must only contribute code, assets, libraries, designs and other materials they have the legal right to contribute.
 
 Repository-specific licensing and contribution requirements will apply.
 
-Participation does not automatically grant access to private Ubujima repositories, production systems, confidential information, or proprietary technology.
+Participation does not automatically grant access to private Ubujima repositories, confidential information, production systems or proprietary technology.
 
 Additional agreements may be required for certain development areas.
 
----
-
 # Challenge Status
 
-The React App Challenge framework is currently being prepared.
+The React App Challenge framework is being prepared progressively.
 
-Upcoming updates will include:
+Upcoming updates may include:
 
 - Challenge repository
-- Initial GitHub issues
+- Initial issues and epics
 - Technical specifications
-- Development environment
-- Figma and design resources
-- Backend access instructions
-- Contribution workflow
+- Design resources
+- Contributor development environments
+- API documentation
 - Submission process
 - Evaluation criteria
 - Timeline and milestones
