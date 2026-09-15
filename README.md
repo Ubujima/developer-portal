@@ -1,43 +1,93 @@
-# Website
+# Ubujima Developer Hub
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+The central documentation and onboarding portal for the Ubujima technology ecosystem.
 
-## Installation
+[tech.ubujima.com](https://tech.ubujima.com)
+
+## About
+
+Ubujima Corporation is building an interconnected technology ecosystem designed for shared prosperity, focused on the global Afro-community. This portal serves as the reference for all technical contributors — developers, engineers, designers, researchers, and builders.
+
+## Documentation
+
+The portal is organized into four sections:
+
+### Getting Started
+
+- **Welcome** — Introduction and recommended onboarding path
+- **About Ubujima** — Company vision and technology layers
+- **The Ubujima Ecosystem** — Core products and shared infrastructure
+- **Developer Onboarding** — Step-by-step guide to getting involved
+- **Contribution Guide** — Standards and expectations for contributors
+
+### Projects
+
+- **AfroCom** — Community platform and super-app (Flutter, React, Supabase)
+- **Ma'at AI** — Artificial intelligence and collective intelligence initiative
+- **Maji Blockchain** — Decentralized infrastructure initiative
+
+### Engineering
+
+- **Architecture** — Ecosystem vision, current architecture, and migration strategy
+- **API Architecture & Guidelines** — API design principles and standards
+- **Infrastructure** — Technology stack, philosophy, and scaling strategy
+- **Security** — Security principles and practices across the platform
+- **Development Standards** — Engineering workflow, code review, and quality standards
+
+### Opportunities
+
+- **Overview** — Available ways to contribute
+- **React App Challenge** — Collaborative initiative to build the AfroCom web app
+- **Partner Projects** — Framework for partner and community projects
+- **Submit a Project** — How to propose a project for the ecosystem
+
+## Local Development
+
+### Prerequisites
+
+- Node.js >= 20.0
+
+### Install
 
 ```bash
 npm install
 ```
 
-**Note**: feel free to use the package manager of your choice.
-
-## Local Development
+### Start Development Server
 
 ```bash
 npm run start
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+Opens a local development server with live reload at `http://localhost:3000`.
 
-## Build
-
-```bash
-npm run build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-## Deployment
-
-Using SSH:
+### Build
 
 ```bash
-USE_SSH=true npm run deploy
-```
+npm run build```
 
-Not using SSH:
+Generates static content into the `build` directory.
+
+### Type Check
 
 ```bash
-GIT_USER=<Your GitHub username> npm run deploy
+npm run typecheck
 ```
 
-If you are using GitHub Pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+## Project Structure
+
+```
+docs/
+├── getting-started/    # Onboarding and orientation
+├── engineering/        # Architecture, API, infrastructure, security, standards
+├── opportunities/      # Challenges, partner projects, submissions
+└── projects/           # AfroCom, Ma'at AI, Maji
+```
+
+## Contributing
+
+See the [Contribution Guide](https://tech.ubujima.com/docs/getting-started/contribution-guide) for standards and expectations.
+
+## License
+
+See the repository for license information.
